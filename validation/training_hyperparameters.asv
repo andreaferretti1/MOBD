@@ -1,0 +1,18 @@
+classdef training_hyperparameters < uint32
+    % Questa classe è una enumerazione dell'insieme degli iperparametri
+    % necessari per addestrare la rete
+    % Valori:
+    % 
+
+
+    enumeration
+        ALPHA (1)
+        BETA (2)
+        EPOCHS_NUM (3)
+        MINIBATCH_SIZE(4)
+        REGULARIZATION_COEFFICIENT(5)
+    end
+
+end
+
+

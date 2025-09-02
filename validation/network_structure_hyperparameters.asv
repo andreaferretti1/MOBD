@@ -1,0 +1,19 @@
+classdef network_structure_hyperparameters
+    % Questa classe è una enumerazione degli iperparametri che definiscono
+    % la struttura della rete. 
+    % Valori:
+    % - NUM_HIDDEN_LAYERS è il numero di strati nascosti della rete
+    % - NUM_NEURONS_PER_LAYER è il numero di neuroni per ogni strato della rete
+    % - ACTIVATION_FUNCTION_PER_LAYER è la funzione di attivazione per ogni
+    %
+
+    enumeration
+
+        NUM_HIDDEN_LAYERS (1)
+        NUM_NEURONS_PER_LAYER (2)
+        ACTIVATION_FUNCTION_PER_LAYER (3)
+        THRESHOLD_POSITIVITY (4)
+
+    end
+end
+

@@ -1,0 +1,10 @@
+function show_numerical_feature_graphs(features)
+%Questa funzione mostra a schermo i valori delle features numeriche
+%La funzione riceve in input una matrice relativa alle features numeriche
+
+% Definisco i nomi delle features
+feature_names = {"age"};
+
+
+end
+
