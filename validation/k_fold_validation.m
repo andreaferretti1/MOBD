@@ -32,11 +32,11 @@ for iteration = 1:folds_num
 
     % Calcolo i campioni dei fold di training
     train_idx = setdiff(1:num_samples, val_idx);
-    X_training = X_training(train_idx, :);
-    Y_training = Y_training(train_idx);
+    X_train_folds = X_training(train_idx, :);
+    Y_train_folds = Y_training(train_idx);
 
     % Addestro la rete neurale
-    neural_network_trained = train_model(X_training, Y_training, X_validation, Y_validation, neural_network, training_hyperparams, true);
+    neural_network_trained = train_model(X_train_folds, Y_train_folds, X_validation, Y_validation, neural_network, training_hyperparams, true);
 
     % Classifico i campioni del fold di validazione
     [~, Y_val_classified] = predict_and_classify(X_validation, neural_network_trained);
@@ -48,10 +48,10 @@ for iteration = 1:folds_num
     val_f1_scores(iteration) = f1_score;
 
     % Classifico i campioni del training set
-    [~, Y_train_classified] = predict_and_classify(X_training, neural_network_trained);
+    [~, Y_train_classified] = predict_and_classify(X_train_folds, neural_network_trained);
 
     % Calcolo l'F1 score del modello sul training set
-    [f1_score, ~, ~] = evaluate_model(Y_train_classified, Y_training);
+    [f1_score, ~, ~] = evaluate_model(Y_train_classified, Y_train_folds);
 
     % Salvo l'F1 score dell'iterazione corrente
     train_f1_scores(iteration) = f1_score;
