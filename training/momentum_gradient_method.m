@@ -54,7 +54,7 @@ axis off;
 title('Info Addestramento');
 
 % Creo il testo che mostra gli iperparametri
-static_text = sprintf('Alpha: %.4f\nBeta: %.2f\nMinibatch size: %d\nRegularization: %.4f\nThreshold: %.2f', ...
+static_text = sprintf('Alpha: %f\nBeta: %.2f\nMinibatch size: %d\nRegularization: %.4f\nThreshold: %.2f', ...
                        alpha, beta, minibatch_size, regularization_parameter, neural_network{neural_network_structure.THRESHOLD_POSITIVITY.Value});
 text(0.05, 0.9, static_text, 'FontSize', 11, 'VerticalAlignment', 'top');
 

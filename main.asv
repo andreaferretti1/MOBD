@@ -26,23 +26,24 @@ rng(1);
 
 % Effettuo il tuning degli iperparametri
 % Definisco i possibili valori degli iperparametri
-alpha = [0.0001, 0.0001, 0.0001];
-beta = [0.8, 0.8, 0.8];
-epochs = [20, 20, 20];
-minibatch_sizes = [64, 64, 64];
-regularization_coefficients = [0.1, 0.2, 0.2];
+alpha = [0.00001, 0.00001, 0.00001, 0.0001];
+beta = [0.9, 0.8, 0.6, 0.7];
+epochs = [80, 80, 80, 80];
+minibatch_sizes = [256, 256, 256, 256];
+regularization_coefficients = [10, 0.01, 0.5, 0.2];
 
 input_neurons = size(X_training, 2);
 output_neurons = 1;
 network_configs = { ...
     struct('neurons', [input_neurons, 32, 16, 8, output_neurons], 'act_funcs', ["relu", "relu", "relu", "sigmoid"]), ...
+    struct('neurons', [input_neurons, 32, 16, 8, 4 output_neurons], 'act_funcs', ["relu", "relu", "relu", "relu", "sigmoid"]),...
     struct('neurons', [input_neurons, 32, 16, 8, output_neurons], 'act_funcs', ["relu", "relu", "relu", "sigmoid"]),...
     struct('neurons', [input_neurons, 32, 16, 8, output_neurons], 'act_funcs', ["relu", "relu", "relu", "sigmoid"])...
 
 };
 
-parameter_initialization_method = ["he_normal", "he_normal", "uniform"];
-threshold_positivity = [0.4, 0.4, 0.4];
+parameter_initialization_method = ["he_normal", "he_normal", "uniform", "he_normal"];
+threshold_positivity = [0.9, 0.3, 0.2, 0.1];
 
 [best_network_hyperparams, best_training_hyperparams] = tune_hyperparameters(X_training, Y_training, alpha, beta, epochs, minibatch_sizes, regularization_coefficients, network_configs, parameter_initialization_method, threshold_positivity);
 

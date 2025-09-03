@@ -12,12 +12,9 @@ function [mean_train_f1_score, mean_val_f1_score] = k_fold_validation(folds_num,
 
 % Mescolo il training set
 num_samples = size(X_training, 1);
-shuffled_idx = randperm(num_samples);
-X_shuffled = X_training(shuffled_idx, :);
-Y_shuffled = Y_training(shuffled_idx);
 
 % Creo i folds
-folds = define_folds(folds_num, num_samples);
+folds_idx = define_folds(folds_num, X_training, Y_training);
 
 % Definisco il vettore contenente l'accuratezza sul validation set di ogni modello addestrato
 val_f1_scores = zeros(folds_num, 1);
@@ -28,24 +25,15 @@ train_f1_scores = zeros(folds_num, 1);
 % Addestro i modelli, cambiando il validation set ad ogni iterazione, e calcolo l'accuratezza
 for iteration = 1:folds_num
 
-    % Calcolo l'indice iniziale e finale del fold di validazione
-    val_set_start_idx = folds(iteration);
-
-    if(iteration ~= folds_num)
-        val_set_end_idx = folds (iteration + 1);
-    else
-        val_set_end_idx = num_samples;
-    end
-
     % Calcolo i campioni del fold di validazione
-    val_idx = val_set_start_idx : val_set_end_idx;
-    X_validation = X_shuffled(val_idx, :);
-    Y_validation = Y_shuffled(val_idx);
+    val_idx = folds_idx{iteration};
+    X_validation = X_training(val_idx, :);
+    Y_validation = Y_training(val_idx);
 
     % Calcolo i campioni dei fold di training
     train_idx = setdiff(1:num_samples, val_idx);
-    X_training = X_shuffled(train_idx, :);
-    Y_training = Y_shuffled(train_idx);
+    X_training = X_training(train_idx, :);
+    Y_training = Y_training(train_idx);
 
     % Addestro la rete neurale
     neural_network_trained = train_model(X_training, Y_training, X_validation, Y_validation, neural_network, training_hyperparams, true);

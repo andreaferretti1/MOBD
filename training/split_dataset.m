@@ -1,5 +1,5 @@
 function [training_set_X, test_set_X, training_set_Y, test_set_Y] = split_dataset(X, Y, perc_test)
-% Questa funzione riceve in input la matrice delle features e la colonna della label, e lo divide in training set,
+% Questa funzione riceve in input la matrice delle features e la colonna della label, e lo divide in training set
 % e test set. Poichè il dataset è sbilanciato, la suddivisione è
 % stratificata, ovvero per costruire il test set viene preso perc_test dei campioni con label
 % negativa e perc_test dei campioni con label positiva 
