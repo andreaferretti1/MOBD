@@ -1,0 +1,1 @@
+This project aims at implementing ML algorithms to validate, train and evaluate a neural network that classifies data of the https://archive.ics.uci.edu/dataset/222/bank+marketing dataset. Some of the functions implemented are hard coded for binary classification, so it is not possible to use them to train multiclass or regression neural networks.
