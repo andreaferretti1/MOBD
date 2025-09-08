@@ -1,4 +1,4 @@
-function [grad_W, grad_b] = backpropagation_with_regularization(minibatch_size, Y_labels, neural_network, lambda, Y_predicted, a, z)
+function [grad_W, grad_b] = backpropagation_with_regularization(minibatch_size, Y_labels, neural_network, lambda, Y_predicted, a, z, w_pos, w_neg)
 % Questa funzione implementa l'algoritmo di backpropagation per il calcolo
 % del gradiente dell'errore commesso su un campione. L'algoritmo di
 % backpropagation è stato scritto in forma vettoriale, in modo tale da
@@ -14,6 +14,8 @@ function [grad_W, grad_b] = backpropagation_with_regularization(minibatch_size, 
 % - Y_predicted è l'insieme delle predizioni effettuate dal modello sui campioni del minibatch
 % - a è l'insieme delle uscite degli strati della rete neurale
 % - z è l'insieme delle somme pesate in input ai neuroni di ciascuno strato
+% - w_pos è il peso da attribuire alla classe positiva
+% - w_neg è il peso da attribuire alla classe negativa
 % Output:
 % - grad_W è un cell array, in cui la cella i-esima rappresenta la matrice contenente la media della somma dei gradienti degli errori sul minibatch rispetto ai pesi che vanno dallo strato i allo strato i+1
 % - grad_b è un cell array, in cui la cella i-esima rappresenta il vettore contenente la media della somma dei gradienti degli errori sul minibatch rispetto ai bias dello strato i
@@ -31,9 +33,11 @@ num_layers = length(W) + 1;
 grad_W = cell(size(W));
 grad_b = cell(size(b));
 
+% Calcolo il vettore del peso da dare a ciascun campione
+weight_vector = w_pos .* Y_labels + w_neg .* (1 - Y_labels);
 
 % Creo un vettore che tiene traccia del gradiente dell'errore rispetto alle z
-dE_dz = Y_predicted' - Y_labels';
+dE_dz = weight_vector' .* (Y_predicted' - Y_labels');
 
 for layer = (num_layers - 1):-1:1
     

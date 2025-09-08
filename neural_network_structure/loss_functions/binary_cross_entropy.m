@@ -1,8 +1,10 @@
-function [loss] = binary_cross_entropy(Y_predicted, Y_actual)
+function [loss] = binary_cross_entropy(Y_predicted, Y_actual, w_pos, w_neg)
 % Questa funzione implementa la binary cross entropy
 % Input:
 % - Y_preditced è il vettore delle predizioni del classificatore
 % - Y_actual è il vettore delle label dei campioni su cui è stata effettuata la predizione
+% - w_pos è il peso da dare alla classe positiva
+% - w_neg è il peso da dare alla classe negativa
 % Output:
 % - loss è il vettore delle loss sui campioni passati in input
 
@@ -17,7 +19,7 @@ Y_predicted = max(min(Y_predicted, 1-epsilon), epsilon);
 
 
 % Calcolo la loss
-loss = - Y_actual .* log(Y_predicted) - ( 1 - Y_actual) .* log( 1 - Y_predicted);
+loss = - w_pos * Y_actual .* log(Y_predicted) - w_neg * ( 1 - Y_actual) .* log( 1 - Y_predicted);
  
 
 end

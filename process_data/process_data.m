@@ -32,6 +32,13 @@ processed_Y = encode_label(processed_Y);
 processed_X.day = cos_out;
 processed_X.month = sin_out;
 
+% Applico il logaritmo alle fearures con distribuzione asimmetrica
+processed_X.balance = apply_log(processed_X.balance);
+processed_X.duration = apply_log(processed_X.duration);
+processed_X.campaign = apply_log(processed_X.campaign);
+processed_X.pdays = apply_log(processed_X.pdays);
+processed_X.previous = apply_log(processed_X.previous);
+
 % Dichiaro le colonne che rappresentano features categoriche
 columns_to_encode = [2, 3, 4, 5, 7, 8, 9, 16];
 
