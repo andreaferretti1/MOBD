@@ -5,7 +5,7 @@ function [grad_W, grad_b] = backpropagation_with_regularization(minibatch_size, 
 % sfruttare le caratteristiche del linguaggio di programmazione MATLAB.
 % Inoltre, l'algoritmo calcola la media della somma dei
 % gradienti sul minibatch, e aggiunge il gradiente del termine di
-% regolarizzazione, che in questo caso è la norma l2.
+% regolarizzazione, che in questo caso è la norma l1.
 % Input:
 % - minibatch_size è la grandezza del minibatch
 % - Y_labels è l'insieme delle label dei campioni del minibatch
@@ -46,7 +46,7 @@ for layer = (num_layers - 1):-1:1
     grad_W{layer} = (dE_dz * a{layer}') / minibatch_size;
 
     % Aggiungo il termine di regolarizzazione
-    grad_W{layer} = grad_W{layer} + 2*lambda*W{layer};
+    grad_W{layer} = grad_W{layer} + l1_derivative(lambda, W{layer});
 
     if layer > 1
         % Definisco il vettore degli elementi sulla diagonale della matrice Jacobiana relativa a dg_dz

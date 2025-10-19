@@ -7,7 +7,7 @@ function show_numerical_feature_graphs(features, feature_names)
 for feature = 1:length(feature_names)
 
     % Seleziono la feature
-    feature_values = features(:, feature);
+    feature_values = features{:, feature};
     
     % Calcolo il numero di campioni per ogni valore della feature
     [unique_vals, ~, ic] = unique(feature_values);

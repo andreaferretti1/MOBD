@@ -22,7 +22,7 @@ val_f1_scores = zeros(folds_num, 1);
 % Definisco il vettore contenente l'accuratezza sul validation set di ogni modello addestrato
 train_f1_scores = zeros(folds_num, 1);
 
-numeric_features_idx = [1, 2, 5, 6, 7, 8];
+numeric_features = ["age", "balance", "duration", "previous"];
 
 % Addestro i modelli, cambiando il validation set ad ogni iterazione, e calcolo l'accuratezza
 for iteration = 1:folds_num
@@ -38,10 +38,14 @@ for iteration = 1:folds_num
     Y_train_folds = Y_training(train_idx);
 
     % Normalizzo le features numeriche
-    [X_train_folds( :, numeric_features_idx), X_validation( :, numeric_features_idx)] = z_score(X_train_folds( :, numeric_features_idx), X_validation( :, numeric_features_idx));
+    [X_train_folds{ :, numeric_features}, X_validation{ :, numeric_features}] = z_score(X_train_folds{ :, numeric_features}, X_validation{ :, numeric_features});
 
     % Calcolo i pesi da attribuire alle classi
     [w_pos, w_neg] = weight_class(Y_train_folds);
+
+    % Trasformo la tabella delle features in matrici
+    X_train_folds = table2array(X_train_folds);
+    X_validation = table2array(X_validation);
 
     % Addestro la rete neurale
     neural_network_trained = train_model(X_train_folds, Y_train_folds, X_validation, Y_validation, neural_network, training_hyperparams, true, w_pos, w_neg);

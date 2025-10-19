@@ -2,8 +2,11 @@ function [cos_out, sin_out] = encode_day_and_month(data)
 % Questa funziona codifica il giorno e il mese utilizzando seno e coseno,
 % in modo tale da fornire una rappresentazione circolare dell'anno anzichè
 % lineare
-
-% data è una tabella con le colonne day e month
+% Input:
+% - data è una tabella con le colonne day e month
+% Output:
+% - cos_out è il vettore delle date trasformate in coseno
+% - sin_out è il vettore delle date trasformate in seno
 
 num_of_data = height(data);
 % Inizializzo le colonne del seno e del coseno
