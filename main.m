@@ -12,10 +12,10 @@ data = get_dataset;
 % Eseguo il preprocessamento dei dati per poterli analizzare
 [X, Y] = preprocess_data(data);
 
-% Analizzo le feature numeriche
-numeric_features= ["age", "balance", "duration", "campaign", "pdays", "previous"];
-
-show_numerical_feature_graphs(X(:, numeric_features), numeric_features);
+% % % Analizzo le feature numeriche
+% % numeric_features= ["age", "balance", "duration", "campaign", "pdays", "previous"];
+% % 
+% % show_numerical_feature_graphs(X(:, numeric_features), numeric_features);
 
 
 % Imposto il seed, in maniera tale da avere risultati uguali in esecuzioni diverse del codice
@@ -25,15 +25,15 @@ rng(1);
  [X_training, X_test, Y_training, Y_test] = split_dataset(X, Y, 0.33);
 
 
-% Disegno gli scatter plot tra ciascuna feature numerica e la label del training set
-show_numerical_features_scatter_plot(X_training(:, numeric_features), numeric_features, Y_training);
-
-% Trasformo pdays e campaign in feature categoriche e analizzo come varia la loro relazione con la label
-pdays = transform_pdays(X_training.pdays);
-feature_label_frequency(pdays, "pdays", Y_training);
-
-campaign = transform_campaign(X_training.campaign);
-feature_label_frequency(campaign, "campaign", Y_training);
+% % % Disegno gli scatter plot tra ciascuna feature numerica e la label del training set
+% % show_numerical_features_scatter_plot(X_training(:, numeric_features), numeric_features, Y_training);
+% % 
+% % % Trasformo pdays e campaign in feature categoriche e analizzo come varia la loro relazione con la label
+% % pdays = transform_pdays(X_training.pdays);
+% % feature_label_frequency(pdays, "pdays", Y_training);
+% % 
+% % campaign = transform_campaign(X_training.campaign);
+% % feature_label_frequency(campaign, "campaign", Y_training);
 
 
 % ---------Avvio la pipeline di pulizia e codifica delle features---------
@@ -44,25 +44,26 @@ feature_label_frequency(campaign, "campaign", Y_training);
 % ----------------Effettuo il tuning degli iperparametri------------------
 
 % Definisco i possibili valori degli iperparametri
-alpha = [0.0005, 0.01, 0.01, 0.01, 0.01, 0.01];
-beta = [0.9, 0.9, 0.9, 0.9, 0.9, 0.9];
-epochs = [100, 100, 100, 100, 100, 100];
-minibatch_sizes = [256, 128, 128, 128, 128, 128];
-regularization_coefficients = [0.001, 0.00005, 0.00006, 0.00007, 0.00008, 0.000009];
+alpha = [0.0006, 0.0006, 0.0006, 0.0006, 0.0006, 0.0006, 0.0006];
+beta = [0.95, 0.95, 0.95, 0.95, 0.95, 0.95, 0.95];
+epochs = [50, 50, 50, 50, 50, 50, 50];
+minibatch_sizes = [128, 128, 128, 128, 128, 128, 128];
+regularization_coefficients = [0.001, 0.001, 0.001, 0.001, 0.001, 0.001, 0.001];
 
 input_neurons = size(X_training, 2);
 output_neurons = 1;
 network_configs = {
-    struct('neurons', [input_neurons, 64, 32, 16, 8, output_neurons], 'act_funcs', ["relu", "relu", "relu", "relu", "sigmoid"] ), ...
-    struct('neurons', [input_neurons, 128, 64, 32, output_neurons], 'act_funcs', ["relu", "relu", "relu", "sigmoid"] ), ...
-    struct('neurons', [input_neurons, 128, 64, 32, output_neurons], 'act_funcs', ["relu", "relu", "relu", "sigmoid"] ), ...
-    struct('neurons', [input_neurons, 128, 64, 32, output_neurons], 'act_funcs', ["relu", "relu", "relu", "sigmoid"] ), ...
-    struct('neurons', [input_neurons, 128, 64, 32, output_neurons], 'act_funcs', ["relu", "relu", "relu", "sigmoid"] ), ...
-    struct('neurons', [input_neurons, 128, 64, 32, output_neurons], 'act_funcs', ["relu", "relu", "relu", "sigmoid"] )
+    struct('neurons', [input_neurons, 64, 32, 16, 8, 4, output_neurons], 'act_funcs', ["relu", "relu", "relu", "relu", "relu", "sigmoid"] ), ...
+    struct('neurons', [input_neurons, 64, 32, 16, 8, 4, output_neurons], 'act_funcs', ["relu", "relu", "relu", "relu", "relu", "sigmoid"] ), ...
+    struct('neurons', [input_neurons, 64, 32, 16, 8, 4, output_neurons], 'act_funcs', ["relu", "relu", "relu", "relu", "relu", "sigmoid"] ), ...
+    struct('neurons', [input_neurons, 64, 32, 16, 8, 4, output_neurons], 'act_funcs', ["relu", "relu", "relu", "relu", "relu", "sigmoid"] ), ...
+    struct('neurons', [input_neurons, 64, 32, 16, 8, 4, output_neurons], 'act_funcs', ["relu", "relu", "relu", "relu", "relu", "sigmoid"] ), ...
+    struct('neurons', [input_neurons, 64, 32, 16, 8, 4, output_neurons], 'act_funcs', ["relu", "relu", "relu", "relu", "relu", "sigmoid"] ), ...
+    struct('neurons', [input_neurons, 128, 64, 32, 16, output_neurons], 'act_funcs', ["relu", "relu", "relu", "relu", "sigmoid"] ),
     };
 
-parameter_initialization_method = ["he_normal", "he_normal", "he_normal", "he_normal", "he_normal", "he_normal"];
-threshold_positivity = [0.8, 0.8, 0.8, 0.8];
+parameter_initialization_method = ["he_normal", "he_normal", "he_normal", "he_normal", "he_normal", "he_normal", "he_normal"];
+threshold_positivity = [0.95, 0.85, 0.875, 0.9, 0.925, 0.975, 0.5];
 
 [best_network_hyperparams, best_training_hyperparams] = tune_hyperparameters(X_training, Y_training, alpha, beta, epochs, minibatch_sizes, regularization_coefficients, network_configs, parameter_initialization_method, threshold_positivity);
 

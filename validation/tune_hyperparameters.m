@@ -1,7 +1,7 @@
 function [neural_network_params, training_params] = tune_hyperparameters(X_training, Y_training, alpha, beta, epochs, minibatch_sizes, regularization_coefficients, network_configs, parameter_initialization_method, threshold_positivity)
 % Questa funzione implementa il processo di tuning degli iperparametri. La
 % funzione restituisce in output la combinazione di iperparametri migliore.
-% La funzione salva le reti neurali provate e l'F1 score su validation set e su training set nel file validation_result.txt
+% La funzione salva le reti neurali provate e l'F2 score su validation set e su training set nel file validation_result.txt
 % Input:
 % - X_training è la matrice dell'insieme dei valori di input dei campioni del training set
 % - Y_training è il vettore delle labels dei campioni del training set
@@ -10,7 +10,7 @@ function [neural_network_params, training_params] = tune_hyperparameters(X_train
 % - epochs è il vettore dei valori del numero di epoche tra cui scegliere
 % - minibatch_sizes è il vettore dei valori della grandezza del minibatch tra cui scegliere
 % - regularization_coefficients è il vettore dei valori del coefficiente di regolarizzazione tra cui scegliere
-% - network_configs è un cell array di struct. Ogni struct ha un vettore che indica il numero di neuroni per ognistrato, inclusi strato di input e output, e un array di stringhe che indicano la funzione di attivazione per ciascuno strato
+% - network_configs è un cell array di struct. Ogni struct ha un vettore che indica il numero di neuroni per ogni strato, inclusi strato di input e output, e un array di stringhe che indicano la funzione di attivazione per ciascuno strato
 % - parameter_initialization_method è il vettore dei possibili modi di inizializzare i parametri della rete
 % - threshold_positivity è il vettore delle soglie di positività del classificatore tra cui scegliere
 % Output:
@@ -23,10 +23,10 @@ today = string(datetime('today', 'Format', 'dd-MM-yyyy'));
 fprintf(fid, "\n\n\n------------------------- %s -------------------------\n\n\n", today);
 fclose(fid);
 
-% Definisco la variabili in cui salvare l'F1 score sul validation set
-best_val_f1_score = 0;
+% Definisco le variabili in cui salvare l'F2 score sul validation set
+best_val_f2_score = 0;
 
-f1_score_difference = 0;
+f2_score_difference = 0;
 
 % Definisco i vettori in cui salvare la combinazione di iperparametri migliore
 neural_network_params = cell(numel(enumeration('neural_network_hyperparameters')), 1);
@@ -70,18 +70,18 @@ for i = 1:numel(alpha)
     training_params(training_hyperparameters.REGULARIZATION_COEFFICIENT.Value) = r;
 
     % Eseguo l'algoritmo di k-fold validation
-    [mean_train_f1_score, mean_val_f1_score] = k_fold_validation(5, neural_network, training_params, X_training, Y_training);
+    [mean_train_f2_score, mean_val_f2_score, mean_train_precision, mean_val_precision, mean_train_recall, mean_val_recall] = k_fold_validation(5, neural_network, training_params, X_training, Y_training);
 
     % Controllo che l'accuratezza sul validation set sia simile a quella
     % sul training set
-    f1_score_difference = abs(mean_train_f1_score - mean_val_f1_score);
+    f2_score_difference = abs(mean_train_f2_score - mean_val_f2_score);
     
 
-    % Confronto l'accuratezza media sul validation set con l'accuratezza media sul validation set migliore
-    if(mean_val_f1_score > best_val_f1_score)
+    % Confronto l'F2 score medio sul validation set con l'F2 score medio sul validation set migliore
+    if(mean_val_f2_score > best_val_f2_score)
         
         % Aggiorno i parametri
-        best_val_f1_score = mean_val_f1_score;
+        best_val_f2_score = mean_val_f2_score;
        
     end
 
@@ -91,11 +91,11 @@ for i = 1:numel(alpha)
     neural_network_params{neural_network_hyperparameters.THRESHOLD_POSITIVITY.Value} = th;
 
 
-    save_hyperparams(number_of_model, neural_network_params, training_params, mean_val_f1_score, mean_train_f1_score);
+    save_hyperparams(number_of_model, neural_network_params, training_params, mean_val_f2_score, mean_train_f2_score, mean_train_precision, mean_val_precision, mean_train_recall, mean_val_recall);
     
 end
 
-if(best_val_f1_score <= 0.85 && f1_score_difference > tolerance_value)
+if(best_val_f2_score <= 0.85 && f2_score_difference > tolerance_value)
     error("Didn't find suitable model\n");
 end
 

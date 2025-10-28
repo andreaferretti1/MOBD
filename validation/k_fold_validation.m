@@ -1,4 +1,4 @@
-function [mean_train_f1_score, mean_val_f1_score] = k_fold_validation(folds_num, neural_network, training_hyperparams, X_training, Y_training)
+function [mean_train_f2_score, mean_val_f2_score, mean_train_precision, mean_val_precision, mean_train_recall, mean_val_recall] = k_fold_validation(folds_num, neural_network, training_hyperparams, X_training, Y_training)
 % Questa funzione implementa l'algoritmo di K-fold cross validation
 % Input:
 % - folds_num è il numero di folds in cui suddividere il training set
@@ -7,8 +7,8 @@ function [mean_train_f1_score, mean_val_f1_score] = k_fold_validation(folds_num,
 % - X_training è la matrice relativa ai valori delle features dei campioni di addestramento
 % - Y_training è il vettore relativo alle label dei campioni di addestramento
 % Output:
-% - mean_val_f1_score è l'F1 score media sul validation set dei modelli ottenuti 
-% - mean_train_f1_score è l'F1 score media sul training set dei modelli addestrati 
+% - mean_train_f2_score è l'F2 score medio sul validation set dei modelli ottenuti 
+% - mean_val_f2_score è l'F2 score medio sul training set dei modelli addestrati 
 
 % Mescolo il training set
 num_samples = size(X_training, 1);
@@ -16,15 +16,20 @@ num_samples = size(X_training, 1);
 % Creo i folds
 folds_idx = define_folds(folds_num, X_training, Y_training);
 
-% Definisco il vettore contenente l'accuratezza sul validation set di ogni modello addestrato
-val_f1_scores = zeros(folds_num, 1);
+% Definisco i vettori che memorizzano le metriche sul validation set di ogni modello addestrato
+val_f2_scores = zeros(folds_num, 1);
+train_f2_scores = zeros(folds_num, 1);
 
-% Definisco il vettore contenente l'accuratezza sul validation set di ogni modello addestrato
-train_f1_scores = zeros(folds_num, 1);
+val_precision = zeros(folds_num, 1);
+train_precision = zeros(folds_num, 1);
+
+val_recall = zeros(folds_num, 1);
+train_recall = zeros(folds_num, 1);
+
 
 numeric_features = ["age", "balance", "duration", "previous"];
 
-% Addestro i modelli, cambiando il validation set ad ogni iterazione, e calcolo l'accuratezza
+% Addestro i modelli, cambiando il validation set ad ogni iterazione, e calcolo l'F2 score
 for iteration = 1:folds_num
 
     % Calcolo i campioni del fold di validazione
@@ -53,26 +58,29 @@ for iteration = 1:folds_num
     % Classifico i campioni del fold di validazione
     [~, Y_val_classified] = predict_and_classify(X_validation, neural_network_trained);
 
-    % Calcolo l'F1 score del modello sul fold di validazione
-    [f1_score, ~, ~] = evaluate_model(Y_val_classified, Y_validation);
-
-    % Salvo l'F1 score dell'iterazione corrente
-    val_f1_scores(iteration) = f1_score;
-
+    % Calcolo le metriche del modello sul fold di validazione
+    [val_f2_scores(iteration), val_precision(iteration), val_recall(iteration)] = evaluate_model(Y_val_classified, Y_validation);
+   
     % Classifico i campioni del training set
     [~, Y_train_classified] = predict_and_classify(X_train_folds, neural_network_trained);
 
-    % Calcolo l'F1 score del modello sul training set
-    [f1_score, ~, ~] = evaluate_model(Y_train_classified, Y_train_folds);
+    % Calcolo le metriche del modello sul training set
+    [train_f2_scores(iteration), train_precision(iteration), train_recall(iteration)] = evaluate_model(Y_train_classified, Y_train_folds);
 
-    % Salvo l'F1 score dell'iterazione corrente
-    train_f1_scores(iteration) = f1_score;
+    % Salvo l'F2 score dell'iterazione corrente
+    train_f2_scores(iteration) = f2_score;
 
 
 end
 
-% Calcolo l'accuratezza media sul validation set e sul training set dei modelli addestrati 
-mean_val_f1_score = mean(val_f1_scores);
-mean_train_f1_score = mean(train_f1_scores);
+% Calcolo le metriche medie sul validation set e sul training set dei modelli addestrati 
+mean_val_f2_score = mean(val_f2_scores);
+mean_train_f2_score = mean(train_f2_scores);
+
+mean_val_precision = mean(val_precision);
+mean_train_precision = mean(train_precision);
+
+mean_val_recall = mean(val_recall);
+mean_train_recall = mean(train_recall);
 
 end

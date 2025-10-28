@@ -595,3 +595,411 @@ Training F1   = 0.5887
 ------------------------- 19-10-2025 -------------------------
 
 
+
+
+
+------------------------- 19-10-2025 -------------------------
+
+
+
+
+
+------------------------- 19-10-2025 -------------------------
+
+
+
+
+
+------------------------- 20-10-2025 -------------------------
+
+
+
+
+
+------------------------- 20-10-2025 -------------------------
+
+
+
+
+
+------------------------- 20-10-2025 -------------------------
+
+
+----- Model 1 -----
+----- Neural Network hyperparameters -----
+Network configuration (neurons and activations) = {neurons:[43 64 32 16 8 1], act_funcs:{relu, relu, relu, relu, sigmoid}}
+Parameter initialization method = he_normal
+Positivity threshold = 0.8
+
+----- Training hyperparameters -----
+Learning rate = 0.0005
+Momentum coefficient = 0.9
+Number of epochs = 100
+Minibatch size = 256
+Regularization coefficient = 0.001
+
+----- Results -----
+Validation F1 = 0.4544
+Training F1   = 0.4571
+
+
+
+
+
+------------------------- 21-10-2025 -------------------------
+
+
+
+
+
+------------------------- 21-10-2025 -------------------------
+
+
+----- Model 1 -----
+----- Neural Network hyperparameters -----
+Network configuration (neurons and activations) = {neurons:[43 64 32 16 8 1], act_funcs:{relu, relu, relu, relu, sigmoid}}
+Parameter initialization method = he_normal
+Positivity threshold = 0.82
+
+----- Training hyperparameters -----
+Learning rate = 0.0005
+Momentum coefficient = 0.9
+Number of epochs = 100
+Minibatch size = 256
+Regularization coefficient = 0.001
+
+----- Results -----
+Validation F1 = 0.4646
+Training F1   = 0.4680
+
+
+
+
+
+------------------------- 21-10-2025 -------------------------
+
+
+
+
+
+------------------------- 21-10-2025 -------------------------
+
+
+
+
+
+------------------------- 21-10-2025 -------------------------
+
+
+
+
+
+------------------------- 21-10-2025 -------------------------
+
+
+
+
+
+------------------------- 21-10-2025 -------------------------
+
+
+
+
+
+------------------------- 21-10-2025 -------------------------
+
+
+
+
+
+------------------------- 21-10-2025 -------------------------
+
+
+
+
+
+------------------------- 21-10-2025 -------------------------
+
+
+
+
+
+------------------------- 21-10-2025 -------------------------
+
+
+
+
+
+------------------------- 21-10-2025 -------------------------
+
+
+
+
+
+------------------------- 21-10-2025 -------------------------
+
+
+
+
+
+------------------------- 21-10-2025 -------------------------
+
+
+
+
+
+------------------------- 21-10-2025 -------------------------
+
+
+
+
+
+------------------------- 21-10-2025 -------------------------
+
+
+
+
+
+------------------------- 21-10-2025 -------------------------
+
+
+
+
+
+------------------------- 21-10-2025 -------------------------
+
+
+
+
+
+------------------------- 21-10-2025 -------------------------
+
+
+
+
+
+------------------------- 22-10-2025 -------------------------
+
+
+
+
+
+------------------------- 27-10-2025 -------------------------
+
+
+
+
+
+------------------------- 27-10-2025 -------------------------
+
+
+
+
+
+------------------------- 27-10-2025 -------------------------
+
+
+
+
+
+------------------------- 27-10-2025 -------------------------
+
+
+
+
+
+------------------------- 27-10-2025 -------------------------
+
+
+
+
+
+------------------------- 28-10-2025 -------------------------
+
+
+
+
+
+------------------------- 28-10-2025 -------------------------
+
+
+
+
+
+------------------------- 28-10-2025 -------------------------
+
+
+
+
+
+------------------------- 28-10-2025 -------------------------
+
+
+
+
+
+------------------------- 28-10-2025 -------------------------
+
+
+
+
+
+------------------------- 28-10-2025 -------------------------
+
+
+
+
+
+------------------------- 28-10-2025 -------------------------
+
+
+----- Model 1 -----
+----- Neural Network hyperparameters -----
+Network configuration (neurons and activations) = {neurons:[43 64 32 16 8 4 1], act_funcs:{relu, relu, relu, relu, relu, sigmoid}}
+Parameter initialization method = he_normal
+Positivity threshold = 0.7
+
+----- Training hyperparameters -----
+Learning rate = 0.0005
+Momentum coefficient = 0.9
+Number of epochs = 30
+Minibatch size = 256
+Regularization coefficient = 0.001
+
+----- Results -----
+Validation F1 = 0.5788
+Training F1   = 0.5808
+
+
+----- Model 2 -----
+----- Neural Network hyperparameters -----
+Network configuration (neurons and activations) = {neurons:[43 64 32 16 8 1], act_funcs:{relu, relu, relu, relu, sigmoid}}
+Parameter initialization method = he_normal
+Positivity threshold = 0.6
+
+----- Training hyperparameters -----
+Learning rate = 0.0005
+Momentum coefficient = 0.9
+Number of epochs = 30
+Minibatch size = 256
+Regularization coefficient = 0.001
+
+----- Results -----
+Validation F1 = 0.5369
+Training F1   = 0.5382
+
+
+----- Model 3 -----
+----- Neural Network hyperparameters -----
+Network configuration (neurons and activations) = {neurons:[43 64 32 16 8 1], act_funcs:{relu, relu, relu, relu, sigmoid}}
+Parameter initialization method = he_normal
+Positivity threshold = 0.8
+
+----- Training hyperparameters -----
+Learning rate = 0.0005
+Momentum coefficient = 0.9
+Number of epochs = 30
+Minibatch size = 256
+Regularization coefficient = 0.001
+
+----- Results -----
+Validation F1 = 0.6089
+Training F1   = 0.6108
+
+
+----- Model 4 -----
+----- Neural Network hyperparameters -----
+Network configuration (neurons and activations) = {neurons:[43 64 32 16 8 1], act_funcs:{relu, relu, relu, relu, sigmoid}}
+Parameter initialization method = he_normal
+Positivity threshold = 0.5
+
+----- Training hyperparameters -----
+Learning rate = 0.0005
+Momentum coefficient = 0.9
+Number of epochs = 30
+Minibatch size = 256
+Regularization coefficient = 0.001
+
+----- Results -----
+Validation F1 = 0.5480
+Training F1   = 0.5502
+
+
+----- Model 5 -----
+----- Neural Network hyperparameters -----
+Network configuration (neurons and activations) = {neurons:[43 64 32 16 8 1], act_funcs:{relu, relu, relu, relu, sigmoid}}
+Parameter initialization method = he_normal
+Positivity threshold = 0.4
+
+----- Training hyperparameters -----
+Learning rate = 0.0005
+Momentum coefficient = 0.9
+Number of epochs = 30
+Minibatch size = 256
+Regularization coefficient = 0.001
+
+----- Results -----
+Validation F1 = 0.4419
+Training F1   = 0.4420
+
+
+----- Model 6 -----
+----- Neural Network hyperparameters -----
+Network configuration (neurons and activations) = {neurons:[43 64 32 16 8 1], act_funcs:{relu, relu, relu, relu, sigmoid}}
+Parameter initialization method = he_normal
+Positivity threshold = 0.9
+
+----- Training hyperparameters -----
+Learning rate = 0.0005
+Momentum coefficient = 0.9
+Number of epochs = 30
+Minibatch size = 256
+Regularization coefficient = 0.001
+
+----- Results -----
+Validation F1 = 0.6281
+Training F1   = 0.6278
+
+
+----- Model 7 -----
+----- Neural Network hyperparameters -----
+Network configuration (neurons and activations) = {neurons:[43 128 64 32 1], act_funcs:{relu, relu, relu, sigmoid}}
+Parameter initialization method = he_normal
+Positivity threshold = 0.5
+
+----- Training hyperparameters -----
+Learning rate = 0.0005
+Momentum coefficient = 0.9
+Number of epochs = 30
+Minibatch size = 256
+Regularization coefficient = 0.001
+
+----- Results -----
+Validation F1 = 0.5406
+Training F1   = 0.5409
+
+
+
+
+
+------------------------- 28-10-2025 -------------------------
+
+
+
+
+
+------------------------- 28-10-2025 -------------------------
+
+
+
+
+
+------------------------- 28-10-2025 -------------------------
+
+
+
+
+
+------------------------- 28-10-2025 -------------------------
+
+

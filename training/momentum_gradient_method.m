@@ -1,6 +1,6 @@
 function [W, b] = momentum_gradient_method(alpha, beta, train_X, train_Y, eval_X, eval_Y, neural_network, minibatch_size, max_epochs_num, regularization_parameter, isValidation, w_pos, w_neg)
 % Questa funzione implementa il metodo del gradiente con momentum. Questa
-% funzione calcola la loss e la metrica F1-score sul training set alla fine di ogni minibatch, e
+% funzione calcola la loss e la metrica F2 score sul training set alla fine di ogni minibatch, e
 % calcola le stesse metriche sul validation/test set 
 % Input:
 % - alpha è il passo
@@ -31,12 +31,12 @@ else
 end
 
 % Inizializzo il primo grafico
-f1_score_diagram = subplot(2, 2, 1);
+f2_score_diagram = subplot(2, 2, 1);
 hold on;
-train_f1_plot = plot(NaN, NaN, 'b-', 'LineWidth', 2);
-eval_f1_plot = plot(NaN, NaN, 'r-', 'LineWidth', 2);
+train_f2_plot = plot(NaN, NaN, 'b-', 'LineWidth', 2);
+eval_f2_plot = plot(NaN, NaN, 'r-', 'LineWidth', 2);
 xlabel('Iterazioni');
-ylabel('F1 score');
+ylabel('F2 score');
 legend({'Training F1 score', legend_string + "F1 score"});
 hold off;
 
@@ -77,8 +77,8 @@ eval_frequency = 30;
 num_of_evaluations = floor(max_num_iterations / eval_frequency);
 train_loss = zeros(max_num_iterations, 1);
 eval_loss = zeros(num_of_evaluations, 1);
-train_f1_score = zeros(max_num_iterations, 1);
-eval_f1_score = zeros(num_of_evaluations, 1);
+train_f2_score = zeros(max_num_iterations, 1);
+eval_f2_score = zeros(num_of_evaluations, 1);
 iteration = 0;
 
 % Definisco due variabili in cui memorizzare il valore dei pesi nell'iterazione precedente
@@ -124,20 +124,20 @@ for epoch = 1:max_epochs_num
         %--------------- Aggiorno i dati del grafico ---------------
         iteration = iteration + 1;
        
-        % Calcolo loss media e F1 score sul training set e aggiorno i grafici
+        % Calcolo loss media e F2 score sul training set e aggiorno i grafici
         [Y_predicted, Y_classified] = predict_and_classify(train_X, neural_network);
         train_loss(iteration) = mean(binary_cross_entropy(Y_predicted, train_Y, w_pos, w_neg), 'all');
-        [train_f1_score(iteration), ~, ~] = evaluate_model(Y_classified, train_Y);
+        [train_f2_score(iteration), ~, ~] = evaluate_model(Y_classified, train_Y);
         set(train_loss_plot, 'XData', 1:iteration, 'YData', train_loss(1:iteration));
-        set(train_f1_plot, 'XData', 1:iteration, 'YData', train_f1_score(1:iteration));
+        set(train_f2_plot, 'XData', 1:iteration, 'YData', train_f2_score(1:iteration));
 
-        % Calcolo loss media e F1 score sul validation set, se deve essere fatto
+        % Calcolo loss media e F2 score sul validation set, se deve essere fatto
         if(mod(iteration, eval_frequency) == 0)
             index = iteration / eval_frequency;
             [Y_predicted, Y_classified] = predict_and_classify(eval_X, neural_network);
             eval_loss(index) = mean(binary_cross_entropy(Y_predicted, eval_Y, w_pos, w_neg), 'all');
-            [eval_f1_score(index), ~, ~] = evaluate_model(Y_classified, eval_Y);
-            set(eval_f1_plot, 'XData', 1:eval_frequency:iteration, 'YData', eval_f1_score(1:index));
+            [eval_f2_score(index), ~, ~] = evaluate_model(Y_classified, eval_Y);
+            set(eval_f2_plot, 'XData', 1:eval_frequency:iteration, 'YData', eval_f2_score(1:index));
             set(eval_loss_plot, 'XData', 1:eval_frequency:iteration, 'YData', eval_loss(1:index));
         end
         
