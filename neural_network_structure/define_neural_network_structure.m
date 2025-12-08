@@ -65,7 +65,12 @@ neural_network{neural_network_structure.WEIGHT_MATRIX.Value} = W;
 neural_network{neural_network_structure.BIAS_VECTOR.Value} = b;
 neural_network{neural_network_structure.ACTIVATION_FUNCTIONS.Value} = g;
 neural_network{neural_network_structure.ACTIVATION_FUNCTIONS_DERIVATIVE.Value} = g_derivative;
-neural_network{neural_network_structure.THRESHOLD_POSITIVITY.Value} = threshold_positivity;
+
+if(threshold_positivity > 0)
+
+    neural_network{neural_network_structure.THRESHOLD_POSITIVITY.Value} = threshold_positivity;
+
+end
 
 end
 

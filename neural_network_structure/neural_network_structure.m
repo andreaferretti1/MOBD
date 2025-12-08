@@ -1,6 +1,7 @@
 classdef neural_network_structure
     % Questa classe è una enumerazione degli elementi che definiscono
     % la struttura della rete neurale.
+    % 
     % Valori:
     % - WEIGHT_MATRIX è l'insieme delle matrici dei pesi
     % - BIAS_VECTOR è l'insieme dei vettori di bias

@@ -1,9 +1,11 @@
 function [model_f2_score, model_precision, model_recall] = evaluate_model(Y_classified, Y_test)
 % Questa funzione valuta le prestazioni del modello. Le metriche utilizzate
 % sono F2 score, precision e recall.
+% 
 % Input:
 % - Y_pred è il vettore degli output classificati dal modello sui campioni del test set
 % - Y_test è il vettore delle label dei campioni del test set
+% 
 % Output:
 % - model_f2_score è il valore di F2 score del modello
 % - model_precision è il valore di precision del modello

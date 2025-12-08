@@ -47,8 +47,8 @@ rng(1);
 alpha = [0.0006, 0.0006, 0.0006, 0.0006, 0.0006, 0.0006, 0.0006];
 beta = [0.95, 0.95, 0.95, 0.95, 0.95, 0.95, 0.95];
 epochs = [50, 50, 50, 50, 50, 50, 50];
-minibatch_sizes = [128, 128, 128, 128, 128, 128, 128];
-regularization_coefficients = [0.001, 0.001, 0.001, 0.001, 0.001, 0.001, 0.001];
+minibatch_sizes = [256, 256, 256, 128, 128, 128, 128];
+regularization_coefficients = [0.003, 0.003, 0.003, 0.001, 0.001, 0.001, 0.001];
 
 input_neurons = size(X_training, 2);
 output_neurons = 1;
@@ -57,13 +57,14 @@ network_configs = {
     struct('neurons', [input_neurons, 64, 32, 16, 8, 4, output_neurons], 'act_funcs', ["relu", "relu", "relu", "relu", "relu", "sigmoid"] ), ...
     struct('neurons', [input_neurons, 64, 32, 16, 8, 4, output_neurons], 'act_funcs', ["relu", "relu", "relu", "relu", "relu", "sigmoid"] ), ...
     struct('neurons', [input_neurons, 64, 32, 16, 8, 4, output_neurons], 'act_funcs', ["relu", "relu", "relu", "relu", "relu", "sigmoid"] ), ...
-    struct('neurons', [input_neurons, 64, 32, 16, 8, 4, output_neurons], 'act_funcs', ["relu", "relu", "relu", "relu", "relu", "sigmoid"] ), ...
-    struct('neurons', [input_neurons, 64, 32, 16, 8, 4, output_neurons], 'act_funcs', ["relu", "relu", "relu", "relu", "relu", "sigmoid"] ), ...
-    struct('neurons', [input_neurons, 128, 64, 32, 16, output_neurons], 'act_funcs', ["relu", "relu", "relu", "relu", "sigmoid"] ),
+    struct('neurons', [input_neurons, 128, 64, 32, 16, output_neurons], 'act_funcs', ["relu", "relu", "relu", "relu", "sigmoid"] ), ...   
+    struct('neurons', [input_neurons, 128, 64, 32, 16, output_neurons], 'act_funcs', ["relu", "relu", "relu", "relu", "sigmoid"] ), ...
+    struct('neurons', [input_neurons, 128, 64, 32, 16, output_neurons], 'act_funcs', ["relu", "relu", "relu", "relu", "sigmoid"] ), ...
+
     };
 
 parameter_initialization_method = ["he_normal", "he_normal", "he_normal", "he_normal", "he_normal", "he_normal", "he_normal"];
-threshold_positivity = [0.95, 0.85, 0.875, 0.9, 0.925, 0.975, 0.5];
+threshold_positivity = [0.875, 0.9, 0.925, 0.975, 0.5, 0.7, 0.9];
 
 [best_network_hyperparams, best_training_hyperparams] = tune_hyperparameters(X_training, Y_training, alpha, beta, epochs, minibatch_sizes, regularization_coefficients, network_configs, parameter_initialization_method, threshold_positivity);
 

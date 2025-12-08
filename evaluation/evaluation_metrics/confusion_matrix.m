@@ -29,10 +29,5 @@ y_sum = y_pred + y;
 
 TP = sum(y_sum == 2);
 TN = sum(y_sum == 0);
-
-disp(TP);
-disp(FP);
-disp(TN);
-disp(FN);
 end
 

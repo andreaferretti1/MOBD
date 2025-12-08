@@ -1003,3 +1003,146 @@ Training F1   = 0.5409
 ------------------------- 28-10-2025 -------------------------
 
 
+
+
+
+------------------------- 28-10-2025 -------------------------
+
+
+----- Model 1 -----
+----- Neural Network hyperparameters -----
+Network configuration (neurons and activations) = {neurons:[43 64 32 16 8 4 1], act_funcs:{relu, relu, relu, relu, relu, sigmoid}}
+Parameter initialization method = he_normal
+Positivity threshold = 0.95
+
+----- Training hyperparameters -----
+Learning rate = 0.0006
+Momentum coefficient = 0.95
+Number of epochs = 50
+Minibatch size = 128
+Regularization coefficient = 0.001
+
+----- Results -----
+Validation F2 = 0.6631
+Training F2 = 0.6523
+
+Validation Precision = 0.4797
+Training Precision = 0.4875
+
+Validation Recall = 0.7175
+Training Recall = 0.7293
+
+
+
+----- Model 2 -----
+----- Neural Network hyperparameters -----
+Network configuration (neurons and activations) = {neurons:[43 64 32 16 8 4 1], act_funcs:{relu, relu, relu, relu, relu, sigmoid}}
+Parameter initialization method = he_normal
+Positivity threshold = 0.85
+
+----- Training hyperparameters -----
+Learning rate = 0.0006
+Momentum coefficient = 0.95
+Number of epochs = 50
+Minibatch size = 128
+Regularization coefficient = 0.001
+
+----- Results -----
+Validation F2 = 0.6837
+Training F2 = 0.6708
+
+Validation Precision = 0.3310
+Training Precision = 0.3375
+
+Validation Recall = 0.9032
+Training Recall = 0.9204
+
+
+
+
+
+
+------------------------- 29-10-2025 -------------------------
+
+
+
+
+
+------------------------- 29-10-2025 -------------------------
+
+
+----- Model 1 -----
+----- Neural Network hyperparameters -----
+Network configuration (neurons and activations) = {neurons:[43 64 32 16 8 4 1], act_funcs:{relu, relu, relu, relu, relu, sigmoid}}
+Parameter initialization method = he_normal
+Positivity threshold = 0.875
+
+----- Training hyperparameters -----
+Learning rate = 0.0006
+Momentum coefficient = 0.95
+Number of epochs = 50
+Minibatch size = 256
+Regularization coefficient = 0.003
+
+----- Results -----
+Validation F2 = 0.6731
+Training F2 = 0.6678
+
+Validation Precision = 0.3540
+Training Precision = 0.3559
+
+Validation Recall = 0.8581
+Training Recall = 0.8661
+
+
+
+----- Model 2 -----
+----- Neural Network hyperparameters -----
+Network configuration (neurons and activations) = {neurons:[43 64 32 16 8 4 1], act_funcs:{relu, relu, relu, relu, relu, sigmoid}}
+Parameter initialization method = he_normal
+Positivity threshold = 0.9
+
+----- Training hyperparameters -----
+Learning rate = 0.0006
+Momentum coefficient = 0.95
+Number of epochs = 50
+Minibatch size = 256
+Regularization coefficient = 0.003
+
+----- Results -----
+Validation F2 = 0.6773
+Training F2 = 0.6711
+
+Validation Precision = 0.3652
+Training Precision = 0.3686
+
+Validation Recall = 0.8493
+Training Recall = 0.8571
+
+
+
+----- Model 3 -----
+----- Neural Network hyperparameters -----
+Network configuration (neurons and activations) = {neurons:[43 64 32 16 8 4 1], act_funcs:{relu, relu, relu, relu, relu, sigmoid}}
+Parameter initialization method = he_normal
+Positivity threshold = 0.925
+
+----- Training hyperparameters -----
+Learning rate = 0.0006
+Momentum coefficient = 0.95
+Number of epochs = 50
+Minibatch size = 256
+Regularization coefficient = 0.003
+
+----- Results -----
+Validation F2 = 0.6706
+Training F2 = 0.6671
+
+Validation Precision = 0.4090
+Training Precision = 0.4107
+
+Validation Recall = 0.7926
+Training Recall = 0.7968
+
+
+

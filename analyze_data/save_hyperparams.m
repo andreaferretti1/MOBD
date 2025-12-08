@@ -1,6 +1,7 @@
 function [] = save_hyperparams(model_number, neural_network_params, training_params, mean_train_f2_score, mean_val_f2_score, mean_train_precision, mean_val_precision, mean_train_recall, mean_val_recall)
 % Questa funzione salva su file il valore degli iperparametri della rete
 % neurale finale
+% 
 % Input:
 % - model_number è il numero del modello addestrato
 % - neural_network_params sono gli iperparametri che definiscono la struttura della rete neurale
@@ -23,6 +24,7 @@ training_hyperparams = enumeration('training_hyperparameters');
 % Scrivo su file
 fprintf(fid, "----- Model %d -----\n", model_number);
 fprintf(fid, "----- Neural Network hyperparameters -----\n");
+
 for i = 1:numel(network_hyperparams)
     
     param_name = network_hyperparams(i).to_string;
