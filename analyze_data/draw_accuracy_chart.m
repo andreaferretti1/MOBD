@@ -1,59 +1,58 @@
-function [] = draw_accuracy_chart(train_accuracies, eval_accuracies, graph_title)
+function [] = draw_accuracy_chart(train_results, eval_results, graph_title)
 % Questa funzione mostra un istogramma delle accuratezze del modello sul
 % training set e sull'evaluation set, che può essere test set o validation
 % set.
+%
 % Input:
-% - train_accuracies è un vettore, dove la componente i-esima è l'accuratezza del modello i sul training set
-% - eval_accuracies è un vettore, dove la componente i-esima è l'accuratezza del modello i sul validation set o sul test set
+% - train_results è la struct contenente precision, recall e F2-score calcolati sul training set
+% - eval_results è la struct contenente precision, recall e F2-score calcolati sul test set
 % - title è il titolo da dare al grafico
 
-% Controllo che i due vettori in input abbiano la stessa lunghezza
-if(length(train_accuracies) ~= length(eval_accuracies))
-    error("In draw_accuracy_chart the number of training accuracies and evaluation accuracies should be the same");
-end
 
-% Calcolo il numero di modelli
-number_of_models = length(train_accuracies);
+% Estraggo i dati dalle struct
+data_to_show = [
+    train_results.f2, eval_results.f2;
+    train_results.precision, eval_results.precision;
+    train_results.recall,    eval_results.recall
+    ];
 
-
-% Manipolo i dati per poter disegnare un istogramma raggruppato
-data_to_show = [train_accuracies(:), eval_accuracies(:)];
 
 % Disegno il grafico
 b = bar(data_to_show, 'grouped');
+grid on;
+hold on;
 
-% Definisco le etichette
-xlabel('Modello');
-ylabel('F1 score');
-title(graph_title);
+% Imposto i colori delle barre: blu per training e rosso per test
 
-% Aggiungo la legenda
-legend({'Training', 'Evaluation'}, 'Location','northeast');
+b(1).FaceColor = [0.2, 0.4, 0.7]; % Training
+b(2).FaceColor = [0.8, 0.3, 0.3]; % Test
+
+% Aggiungo titolo e legenda
+title(graph_title, 'FontSize', 12, 'FontWeight', 'bold');
+ylabel('Valore');
+legend({'Training', 'Test'}, 'Location', 'northeastoutside');
 
 % Miglioro leggibilità asse x
-xticks(1:number_of_models);
-xticklabels(compose("Modello %d", 1:number_of_models));
+xticks(1:3);
+xticklabels({'F-2 Score', 'Precision', 'Recall'});
 
 % Limito l'intervallo dei valori possibili lungo l'asse delle y
-ylim([0 1]);
+ylim([0 1.15]);
 
-% Agguingo griglia
-grid on;
-
-% Disegno i valori delle barre
-for bar_group = 1:numel(b)
-
-   % Calcolo le coordinate delle barre
-   x_coord = b(bar_group).XEndPoints;
-   y_coord = b(bar_group).YEndPoints;
-
-   % Calcolo i valori delle due barre
-   labels = string(b(bar_group).YData);
+% Inserisco i valori sopra ciascuna barra
+for i = 1:numel(b)
+    x_coord = b(i).XEndPoints;
+    y_coord = b(i).YEndPoints;
+    labels = string(round(b(i).YData, 3));
     
-   % Disegno i valori
-   text(x_coord, y_coord, labels, 'HorizontalAlignment', 'center', 'VerticalAlignment', 'bottom');
-
+    text(x_coord, y_coord, labels, ...
+        'HorizontalAlignment', 'center', ...
+        'VerticalAlignment', 'bottom', ...
+        'FontSize', 10, ...
+        'FontWeight', 'bold');
 end
+
+hold off;
 
 
 end

@@ -68,7 +68,7 @@ title('Iperparametri');
 
 
 % Formatto gli iperparametri di addestramento
-param_string = sprintf(['PARAMETRI DI ADDESTRAMENTO:\n' ...
+param_string = sprintf(['\\bfPARAMETRI DI ADDESTRAMENTO:\\rm\n' ...
     'Alpha: %.4f\n' ...
     'Beta: %.2f\n' ...
     'Taglia del minibatch: %d\n' ...
@@ -82,14 +82,10 @@ param_string = sprintf(['PARAMETRI DI ADDESTRAMENTO:\n' ...
 net_string = get_network_structure_string(neural_network, is_validation);
 
 % Concateno le stringhe
-full_string = [param_string, net_string];
+h.static_info_str = [param_string, net_string];
 
 % Mostro la stringa
-text(0.05, 0.9, full_string, 'FontSize', 10, 'VerticalAlignment', 'top', 'FontName', 'Courier');
-
-% Inizializzo il teso dinamico da modificare durante l'addestramento
-h.text_dynamic = text(0.05, 0.6, 'Avvio...', 'FontSize', 11, 'FontWeight', 'bold', 'VerticalAlignment', 'top');
-
+h.text_handle = text(0.05, 0.95, h.static_info_str, 'FontSize', 11, 'VerticalAlignment', 'top', 'FontName', 'Courier');
 
 end
 

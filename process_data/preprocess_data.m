@@ -27,5 +27,6 @@ Y = cleaned_dataset.y;
 % Codifico la label
 Y = encode_binary_column(Y);
 
+head(X, 1);
 end
 

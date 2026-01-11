@@ -1,6 +1,7 @@
 function [w_pos, w_neg] = weight_class(Y_training)
 % Questa funzione calcola i pesi bilanciati da attribuire a ciascuna classe per la
 % loss function
+%
 % Input:
 % - Y_training è il vettore delle labels dei campioni del training set
 % Output:

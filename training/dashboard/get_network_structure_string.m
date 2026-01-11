@@ -10,7 +10,6 @@ function [string] = get_network_structure_string(neural_network, is_validation)
 
 
 
-
 % Estraggo matrici dei pesi e funzioni di attivazione degli strati
 W = neural_network{neural_network_structure.WEIGHT_MATRIX.Value};
 g = neural_network{neural_network_structure.ACTIVATION_FUNCTIONS.Value};
@@ -22,7 +21,7 @@ num_computational_layers = length(W);
 info_lines = cell(num_computational_layers + 3, 1);
 
 % Inserisco il titolo
-info_lines{1} = sprintf('STRUTTURA RETE:\n------------------\n');
+info_lines{1} = sprintf('\\bfSTRUTTURA RETE:\\rm\n');
 
 % Inserisco le info dello strato di input
 input_size = size(W{1}, 2);
@@ -52,6 +51,7 @@ thresh_str = "N/A (CV)";
 if ~is_validation
     thresh_str = sprintf('%.5f', neural_network{neural_network_structure.THRESHOLD_POSITIVITY.Value});
 end
+
 
 info_lines{num_computational_layers + 3} = sprintf("Soglia: %s", thresh_str);
 

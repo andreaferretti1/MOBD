@@ -1,11 +1,13 @@
 function [neural_network] = define_neural_network_structure(num_hidden_layers, num_neurons_per_layer, activation_function, parameter_initialization_method, threshold_positivity)
 % Questa funzione definisce la struttura della rete neurale.
+%
 % Input:
 % - num_layers è il numero di strati nascosti
 % - num_neurons_per_layer è un vettore che indica il numero di neuroni per ogni layer, inclusi gli strati di input e di output
 % - activation_function è un vettore di stringhe che indica la funzione di attivazione per ogni strato nascosto e per lo strato di uscita
 % - parameter_initialization_method indica il metodo con cui devono essere inizializzati i pesi
 % - threshold_positivity è la soglia di positività
+% 
 % Output:
 % - neural_network è il cell arraycontenente gli elementi che definiscono la rete neurale
 

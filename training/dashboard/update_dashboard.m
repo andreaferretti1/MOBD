@@ -1,5 +1,5 @@
 function update_dashboard(h, iter, epoch, max_epochs, train_loss, train_f2_score, eval_loss, eval_f2_score, eval_frequency, is_validation)
-% Quetsa funzione aggiorna i grafici e il conteggio epoche e iterazioni.
+% Questa funzione aggiorna i grafici e il conteggio epoche e iterazioni.
 %
 % Input:
 % - h è l'handle per poter accedere alle componenti della dashboard
@@ -37,16 +37,16 @@ end
 
 
 % Aggiorno il testo
-progress_text = sprintf(['STATO AVANZAMENTO:\n' ...
-    '------------------\n' ...
+progress_text = sprintf(['\n\\bfSTATO AVANZAMENTO:\\rm\n' ...
     'Epoca:      %d / %d\n' ...
     'Iterazione: %d'], ...
     epoch, ...
     max_epochs, ...
     iter);
 
+new_string = [h.static_info_str, progress_text];
 
-set(h.text_dynamic, 'String', progress_text);
+set(h.text_handle, 'String', new_string);
 
 drawnow limitrate;
 end

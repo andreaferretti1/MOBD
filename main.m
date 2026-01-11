@@ -1,85 +1,64 @@
-%Punto di accesso al codice
-
 function main
 
-% --------------------Importo il dataset dal file csv--------------------
+% ---------------------Importo il dataset dal file csv---------------------
 
 data = get_dataset;
 
+% ------------------Eseguo il preprocessamento dei dati--------------------
 
-% ----------------------------Analizzo i dati----------------------------
-
-% Eseguo il preprocessamento dei dati per poterli analizzare
 [X, Y] = preprocess_data(data);
-
-% % % Analizzo le feature numeriche
-% % numeric_features= ["age", "balance", "duration", "campaign", "pdays", "previous"];
-% % 
-% % show_numerical_feature_graphs(X(:, numeric_features), numeric_features);
-
-
-% Imposto il seed, in maniera tale da avere risultati uguali in esecuzioni diverse del codice
-rng(1);
-
-% Suddivido il dataset in training set e test set
- [X_training, X_test, Y_training, Y_test] = split_dataset(X, Y, 0.33);
-
-
-% % % Disegno gli scatter plot tra ciascuna feature numerica e la label del training set
-% % show_numerical_features_scatter_plot(X_training(:, numeric_features), numeric_features, Y_training);
-% % 
-% % % Trasformo pdays e campaign in feature categoriche e analizzo come varia la loro relazione con la label
-% % pdays = transform_pdays(X_training.pdays);
-% % feature_label_frequency(pdays, "pdays", Y_training);
-% % 
-% % campaign = transform_campaign(X_training.campaign);
-% % feature_label_frequency(campaign, "campaign", Y_training);
-
 
 % ---------Avvio la pipeline di pulizia e codifica delle features---------
 
-[X_training] = process_features(X_training);
-[X_test] = process_features(X_test);
+[X] = process_features(X);
+
+% ------------Suddivido il dataset in training set e test set--------------
+
+rng(1);
+
+[X_training, X_test, Y_training, Y_test] = split_dataset(X, Y, 0.33);
 
 % ----------------Effettuo il tuning degli iperparametri------------------
 
 % Definisco i possibili valori degli iperparametri
-alpha = [0.0006, 0.0006, 0.0006, 0.0006, 0.0006, 0.0006, 0.0006];
-beta = [0.95, 0.95, 0.95, 0.95, 0.95, 0.95, 0.95];
-epochs = [50, 50, 50, 50, 50, 50, 50];
-minibatch_sizes = [256, 256, 256, 128, 128, 128, 128];
-regularization_coefficients = [0.003, 0.003, 0.003, 0.001, 0.001, 0.001, 0.001];
-
-input_neurons = size(X_training, 2);
-output_neurons = 1;
-network_configs = {
-    struct('neurons', [input_neurons, 64, 32, 16, 8, 4, output_neurons], 'act_funcs', ["relu", "relu", "relu", "relu", "relu", "sigmoid"] ), ...
-    struct('neurons', [input_neurons, 64, 32, 16, 8, 4, output_neurons], 'act_funcs', ["relu", "relu", "relu", "relu", "relu", "sigmoid"] ), ...
-    struct('neurons', [input_neurons, 64, 32, 16, 8, 4, output_neurons], 'act_funcs', ["relu", "relu", "relu", "relu", "relu", "sigmoid"] ), ...
-    struct('neurons', [input_neurons, 64, 32, 16, 8, 4, output_neurons], 'act_funcs', ["relu", "relu", "relu", "relu", "relu", "sigmoid"] ), ...
-    struct('neurons', [input_neurons, 128, 64, 32, 16, output_neurons], 'act_funcs', ["relu", "relu", "relu", "relu", "sigmoid"] ), ...   
-    struct('neurons', [input_neurons, 128, 64, 32, 16, output_neurons], 'act_funcs', ["relu", "relu", "relu", "relu", "sigmoid"] ), ...
-    struct('neurons', [input_neurons, 128, 64, 32, 16, output_neurons], 'act_funcs', ["relu", "relu", "relu", "relu", "sigmoid"] ), ...
-
-    };
-
-parameter_initialization_method = ["he_normal", "he_normal", "he_normal", "he_normal", "he_normal", "he_normal", "he_normal"];
-threshold_positivity = [0.875, 0.9, 0.925, 0.975, 0.5, 0.7, 0.9];
-
-[best_network_hyperparams, best_training_hyperparams] = tune_hyperparameters(X_training, Y_training, alpha, beta, epochs, minibatch_sizes, regularization_coefficients, network_configs, parameter_initialization_method, threshold_positivity);
+% % alpha = [0.003, 0.002];
+% % beta = [0.95, 0.95];
+% % epochs = [70, 70];
+% % minibatch_sizes = [256, 256];
+% % regularization_coefficients = [0.004, 0.004];
+% % 
+% % input_neurons = size(X_training, 2);
+% % output_neurons = 1;
+% % 
+% % network_configs = {
+% %     struct('neurons', [input_neurons, 128, 64, 32, 16, output_neurons], 'act_funcs', ["relu", "relu", "relu", "relu", "sigmoid"] ), ...
+% %     struct('neurons', [input_neurons, 128, 64, 32, 16, output_neurons], 'act_funcs', ["relu", "relu", "relu", "relu", "sigmoid"] )
+% %     };
+% % 
+% % parameter_initialization_method = ["he_normal", "he_normal"];
+% % 
+% % tune_hyperparameters(X_training, Y_training, alpha, beta, epochs, minibatch_sizes, regularization_coefficients, network_configs, parameter_initialization_method);
 
 
-% ---Addestro il modello con la combinazione di iperparametri migliore---
-num_neurons_per_layer = best_network_hyperparams{neural_network_hyperparameters.NETWORK_CONFIGURATION}.neurons;
+% ----Addestro il modello con la combinazione di iperparametri migliore----
+
+num_neurons_per_layer = [input_neurons, 128, 64, 32, 16, output_neurons];
 num_hidden_layers = numel(num_neurons_per_layer) - 2;
-activation_functions = best_network_hyperparams{neural_network_hyperparameters.NETWORK_CONFIGURATION}.act_funcs;
-parameter_initialization_method = best_network_hyperparams{neural_network_hyperparameters.PARAM_INIT_METHOD};
-threshold_positivity = best_network_hyperparams{neural_network_hyperparameters.THRESHOLD_POSITIVITY};
+activation_functions = ["relu", "relu", "relu", "relu", "sigmoid"];
+parameter_initialization_method = "he_normal";
+threshold_positivity = 0.9;
 neural_network = define_neural_network_structure(num_hidden_layers, num_neurons_per_layer, activation_functions, parameter_initialization_method, threshold_positivity);
 is_validation = false;
 
+training_params = zeros(numel(enumeration('training_hyperparameters')), 1);
+training_params(training_hyperparameters.ALPHA.Value) = 0.002;
+training_params(training_hyperparameters.BETA.Value) = 0.95;
+training_params(training_hyperparameters.EPOCHS_NUM.Value) = 100;
+training_params(training_hyperparameters.MINIBATCH_SIZE.Value) = 128;
+training_params(training_hyperparameters.REGULARIZATION_COEFFICIENT.Value) = 0.004;
+
 % Normalizzo le features numeriche
-numeric_features = ["age", "balance", "duration", "previous"];
+numeric_features = ["age", "balance", "duration", "previous", "campaign", "pdays"];
 [X_training{:, numeric_features}, X_test{ :, numeric_features}] = z_score(X_training{:, numeric_features}, X_test{ :, numeric_features});
 
 % Trasformo le tabelle in matrici
@@ -90,16 +69,19 @@ X_test = table2array(X_test);
 [w_pos, w_neg] = weight_class(Y_training);
 
 % Addestro il modello
-neural_network_trained = train_model(X_training, Y_training, neural_network, best_training_hyperparams, is_validation, w_pos, w_neg);
+neural_network_trained = train_model(X_training, Y_training, neural_network, training_params, is_validation, w_pos, w_neg);
 
 
 % ---Valuto le prestazioni del modello sul training set e sul data set---
-[~, Y_classified] = predict_and_classify(X_test, neural_network_trained);
-[F1_score_test, ~, ~] = evaluate_model(Y_classified, Y_test);
+[~, Y_classified_test] = predict_and_classify(X_test, neural_network_trained);
+[F2_score_test, precision_test, recall_test] = evaluate_model(Y_classified_test, Y_test);
 
-[~, Y_classified] = predict_and_classify(X_training, neural_network_trained);
-[F1_score_training, ~, ~] = evaluate_model(Y_classified, Y_training);
+[~, Y_classified_training] = predict_and_classify(X_training, neural_network_trained);
+[F2_score_training, precision_training, recall_training] = evaluate_model(Y_classified_training, Y_training);
 
-draw_accuracy_chart(F1_score_training, F1_score_test, 'Valutazione prestazioni modello finale');
+results_training = struct('f2', F2_score_training, 'precision', precision_training, 'recall', recall_training);
+results_test = struct('f2', F2_score_test, 'precision', precision_test, 'recall', recall_test);
+
+draw_accuracy_chart(results_training, results_test, 'Valutazione prestazioni modello finale');
 
 end

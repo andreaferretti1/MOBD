@@ -43,6 +43,7 @@ for i = 1:numel(alpha)
     
     neurons_per_layer = net_config.neurons;
     activation_functions_per_layer = net_config.act_funcs;
+    
     if(numel(neurons_per_layer) - 1 ~= numel(activation_functions_per_layer))
         error("Number of activation functions differs from number of layers for configuration");
     end

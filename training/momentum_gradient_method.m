@@ -37,11 +37,11 @@ b_prev = b;
 [num_samples, ~] = size(train_X);
 
 % Estraggo i parametri di addestramento
-alpha = training_hyperparams{training_hyperparameters.ALPHA.Value};
-beta = training_hyperparams{training_hyperparameters.BETA.Value};
-minibatch_size = training_hyperparams{training_hyperparameters.MINIBATCH_SIZE.Value};
-regularization_parameter = training_hyperparams{training_hyperparameters.REGULARIZATION_COEFFICIENT.Value};
-max_epochs_num = training_hyperparams{training_hyperparameters.EPOCHS_NUM.Value};
+alpha = training_hyperparams(training_hyperparameters.ALPHA.Value);
+beta = training_hyperparams(training_hyperparameters.BETA.Value);
+minibatch_size = training_hyperparams(training_hyperparameters.MINIBATCH_SIZE.Value);
+regularization_parameter = training_hyperparams(training_hyperparameters.REGULARIZATION_COEFFICIENT.Value);
+max_epochs_num = training_hyperparams(training_hyperparameters.EPOCHS_NUM.Value);
 
 % Definisco le variabili utili per il grafico
 max_num_iterations = ceil(num_samples / minibatch_size) * max_epochs_num;

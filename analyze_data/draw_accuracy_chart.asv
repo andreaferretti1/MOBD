@@ -1,0 +1,64 @@
+function [] = draw_accuracy_chart(train_results, eval_results, graph_title)
+% Questa funzione mostra un istogramma delle accuratezze del modello sul
+% training set e sull'evaluation set, che può essere test set o validation
+% set.
+%
+% Input:
+% - train_results è la struct contenente precision, recall e F2-score calcolati sul training set
+% - eval_results è la struct contenente precision, recall e F2-score calcolati sul test set
+% - title è il titolo da dare al grafico
+
+% Controllo che le due struct in input abbiano la stessa lunghezza
+if(length(train_results) ~= length(eval_results))
+    error("In draw_accuracy_chart the number of training accuracies and evaluation accuracies should be the same");
+end
+
+% Estraggo i dati dalle struct
+data_to_show = [
+    train_results.f2, eval_results.f2,
+    train_results.precision, eval_results.precision;
+    train_results.recall,    eval_results.recall
+    ];
+
+
+
+% Disegno il grafico
+b = bar(data_to_show, 'grouped');
+grid on;
+hold on;
+
+% Imposto i colori delle barre: blu per training e rosso per test
+b(1).FaceColor = [0.2, 0.4, 0.7];
+b(2).FaceColor = [0.8, 0.3, 0.3];
+
+% Aggiungo la legenda
+legend({'Training', 'Evaluation'}, 'Location','northeast');
+
+% Miglioro leggibilità asse x
+xticks(1:number_of_models);
+xticklabels(compose("Modello %d", 1:number_of_models));
+
+% Limito l'intervallo dei valori possibili lungo l'asse delle y
+ylim([0 1]);
+
+% Agguingo griglia
+grid on;
+
+% Disegno i valori delle barre
+for bar_group = 1:numel(b)
+
+   % Calcolo le coordinate delle barre
+   x_coord = b(bar_group).XEndPoints;
+   y_coord = b(bar_group).YEndPoints;
+
+   % Calcolo i valori delle due barre
+   labels = string(b(bar_group).YData);
+    
+   % Disegno i valori
+   text(x_coord, y_coord, labels, 'HorizontalAlignment', 'center', 'VerticalAlignment', 'bottom');
+
+end
+
+
+end
+

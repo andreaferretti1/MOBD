@@ -43,7 +43,7 @@ val_recall = zeros(folds_num, 1);
 train_recall = zeros(folds_num, 1);
 
 
-numeric_features = ["age", "balance", "duration", "previous"];
+numeric_features = ["age", "balance", "duration", "previous", "campaign", "pdays"];
 
 % Addestro i modelli, cambiando il validation set ad ogni iterazione, e calcolo l'F2 score
 for iteration = 1:folds_num
