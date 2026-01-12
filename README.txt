@@ -1,0 +1,2 @@
+Per eseguire il codice aprire Matlab. Cliccare e aprire il file progetto_banca\MOBD\ProgettoAndreaFerretti.prj per aggiungere automaticamente i percorsi delle funzioni, e lasciarlo aperto. Aprire il main ed eseguirlo.
+Nel main è presente la sezione del tuning degli iperparametri. Se si vuole eseguire anche questa parte è necessario rimuovere il doppio carattere '%' su tutte le righe che lo possiedono.
