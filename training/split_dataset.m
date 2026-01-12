@@ -2,7 +2,9 @@ function [training_set_X, test_set_X, training_set_Y, test_set_Y] = split_datase
 % Questa funzione riceve in input la matrice delle features e la colonna della label, e lo divide in training set
 % e test set. Poichè il dataset è sbilanciato, la suddivisione è
 % stratificata, ovvero per costruire il test set viene preso perc_test dei campioni con label
-% negativa e perc_test dei campioni con label positiva 
+% negativa e perc_test dei campioni con label positiva.
+% Il rimescolamento randomico del training set è implementato nella fase di
+% creazione dei minibatch e di suddivisione del training set in folds.
 % 
 % Input:
 % - X è la table che rappresenta l'insieme dei valori delle features dei campioni
@@ -14,9 +16,7 @@ function [training_set_X, test_set_X, training_set_Y, test_set_Y] = split_datase
 % - test_set_X è lla matrice che rappresenta l'insieme dei valori delle features dei campioni del test set
 % - training_set_Y è il vettore che rappresenta l'insieme delle label dei campioni del training set
 % - test_set_Y è il vettore che rappresenta l'insieme delle label dei campioni del test set
-% 
-% Il rimescolamento randomico del training set è implementato nella fase di
-% creazione dei minibatch e di suddivisione del training set in folds.
+
 
 
 % Controllo che perc_test sia compreso tra 0 e 1

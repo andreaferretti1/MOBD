@@ -44,21 +44,18 @@ regularization_parameter = training_hyperparams(training_hyperparameters.REGULAR
 max_epochs_num = training_hyperparams(training_hyperparameters.EPOCHS_NUM.Value);
 
 % Definisco le variabili utili per il grafico
-max_num_iterations = ceil(num_samples / minibatch_size) * max_epochs_num;
-train_loss = zeros(max_num_iterations, 1);
+train_loss = zeros(max_epochs_num, 1);
 
 if ~is_validation
-    train_f2_score = zeros(max_num_iterations, 1);
+    train_f2_score = zeros(max_epochs_num, 1);
 else
     train_f2_score = [];
 end
 
-eval_frequency = 30;
-num_of_evaluations = floor(max_num_iterations / eval_frequency);
-eval_loss = zeros(num_of_evaluations, 1);
+eval_loss = zeros(max_epochs_num, 1);
 
 if ~is_validation
-    eval_f2_score = zeros(num_of_evaluations, 1);
+    eval_f2_score = zeros(max_epochs_num, 1);
 else
     eval_f2_score = [];
 end
@@ -77,10 +74,10 @@ for epoch = 1:max_epochs_num
         minibatch_data = size(train_X(minibatches{idx}, :), 1);
 
         % Applico l'algoritmo di forwardpropagation
-        [Y_predicted, a, z] = forwardpropagation(train_X(minibatches{idx}, :), W, b, neural_network{neural_network_structure.ACTIVATION_FUNCTIONS.Value});
+        [Y_predicted_e, a, z] = forwardpropagation(train_X(minibatches{idx}, :), W, b, neural_network{neural_network_structure.ACTIVATION_FUNCTIONS.Value});
 
         % Calcolo il gradiente medio della loss function
-        [grad_W, grad_b] = backpropagation_with_regularization(minibatch_data, train_Y(minibatches{idx}, :), neural_network, regularization_parameter, Y_predicted, a, z, w_pos, w_neg);
+        [grad_W, grad_b] = backpropagation_with_regularization(minibatch_data, train_Y(minibatches{idx}, :), neural_network, regularization_parameter, Y_predicted_e, a, z, w_pos, w_neg);
 
         % Aggiorno i parametri della rete
         W_next = cell(length(W), 1);
@@ -100,43 +97,32 @@ for epoch = 1:max_epochs_num
         neural_network{neural_network_structure.WEIGHT_MATRIX.Value} = W;
         neural_network{neural_network_structure.BIAS_VECTOR.Value} = b;
 
-        %--------------- Aggiorno i dati del grafico ---------------
+        
         iteration = iteration + 1;
 
+        update_status_text(plot_handle, epoch, max_epochs_num, iteration);
+
+    end
+
         % Calcolo le metriche sul training set
-        [Y_predicted, Y_classified] = predict_and_classify(is_validation, train_X, neural_network);
-        train_loss(iteration) = mean(binary_cross_entropy(Y_predicted, train_Y, w_pos, w_neg), 'all');
+        [Y_predicted_t, Y_classified_t] = predict_and_classify(is_validation, train_X, neural_network);
+        train_loss(epoch) = mean(binary_cross_entropy(Y_predicted_t, train_Y, w_pos, w_neg), 'all');
+
+        [Y_predicted_e, Y_classified_e] = predict_and_classify(is_validation, eval_X, neural_network);
+         eval_loss(epoch) = mean(binary_cross_entropy(Y_predicted_e, eval_Y, w_pos, w_neg), 'all');
 
         if ~is_validation
 
-            [train_f2_score(iteration), ~, ~] = evaluate_model(Y_classified, train_Y);
-
-        end
-
-        % Calcolo loss media e F2 score sul validation/test set
-        if(mod(iteration, eval_frequency) == 0)
-            
-            index = iteration / eval_frequency;
-            [Y_predicted, Y_classified] = predict_and_classify(is_validation, eval_X, neural_network);
-            eval_loss(index) = mean(binary_cross_entropy(Y_predicted, eval_Y, w_pos, w_neg), 'all');
-            
-            if ~is_validation
-            
-                [eval_f2_score(index), ~, ~] = evaluate_model(Y_classified, eval_Y);
-            
-            end
-
+            [train_f2_score(epoch), ~, ~] = evaluate_model(Y_classified_t, train_Y);
+            [eval_f2_score(epoch), ~, ~] = evaluate_model(Y_classified_e, eval_Y);
+        
         end
 
 
        % Aggiorno la dashboard
-       update_dashboard(plot_handle, iteration, epoch, max_epochs_num, train_loss, train_f2_score, eval_loss, eval_f2_score, eval_frequency, is_validation);
-
-    end
-
+       update_dashboard(plot_handle, iteration, epoch, max_epochs_num, train_loss, train_f2_score, eval_loss, eval_f2_score, is_validation);
 
 end
-
 
 end
 

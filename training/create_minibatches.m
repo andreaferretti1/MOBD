@@ -2,9 +2,11 @@ function [minibatches] = create_minibatches(num_of_data, minibatch_size)
 % Questa funzione restituisce un cell array, dove ogni cella i contiene gli
 % indici che corrispondono ai campioni del training set da assegnare al
 % minibatch i.
+% 
 % Input:
 % - num_of_data è il numero dei campioni del training set
 % - minibatch_size è la grandezza del minibatch
+% 
 % Output
 % - minibatches è un cell array in la cella i-esima contiene il vettore degli indici dell i-esimo minibatch
 

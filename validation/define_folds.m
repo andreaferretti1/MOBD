@@ -2,10 +2,12 @@ function [folds_idx] = define_folds(folds_num, X, Y)
 % Questa funzione definisce i folds in cui deve essere suddiviso il
 % training set. La suddivisione è stratificata, 
 % in modo tale che la classe in minoranza sia rappresentata in ciascun fold 
+% 
 % Input:
 % - folds_num è il numero di folds in cui deve essere suddiviso il training set
 % - X è la matrice delle features dei campioni che devono essere suddivisi nei fold
 % - Y è il vettore delle labels dei campioni che devono essere suddivisi nei fold
+% 
 % Output:
 % - folds è un cell array lungo num_folds, dove la componente i-esima contiene gli indici dell'i-esimo fold
 

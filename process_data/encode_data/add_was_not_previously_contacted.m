@@ -2,6 +2,13 @@ function [was_not_previously_contacted, new_pdays] = add_was_not_previously_cont
 % Questa funzione crea la colonna "was_not_previously_contacted", che
 % indica se il cliente non è stato contattato in campagne precedenti, ed
 % elimina il valore -1 dalla colonna pdays.
+%
+% Input:
+% - pdays è la colonna della feature "pdays"
+%
+% Output:
+% - was_not_previously_contacted è la colonna binaria
+% - new_pdays è la colonna della feature "pdays" processata
 
 % Creo la colonna was_not_previously_contacted
 was_not_previously_contacted = double(pdays == -1);

@@ -1,13 +1,14 @@
 function [Y, a, z] = forwardpropagation(X, W, b, g)
 % Questa funzione implementa l'algoritmo di forwardpropagation per il
 % calcolo della previsione su un campione
+% 
 % Input:
 % - X è il minibatch su cui devono essere calcolate le previsioni
 % - W è un cell array, in cui la cella i-esima contiene la matrice dei pesi relativa all'ingresso nello strato i
 % - b è un cell array, in cui la cella i-esima contiene il vettore dei pesi di bias relativo all'ingresso nello strato i
-% - g è un cell array, in cui la cella i-esima contiene il vettore la
-% funzione di attivazione (rappresentata da function handle) dei neuroni dello strato i + 1 (perchè lo strato di input non ce l'ha)
-% Il numero degli strati viene calcolato implicitamente tramite le dimensioni del cell array W e delle singole matrici dei pesi.
+% - g è un cell array, in cui la cella i-esima contiene la funzione di attivazione (rappresentata da function handle) dei neuroni dello strato i + 1 (perchè lo strato di input non ce l'ha)
+%   Il numero degli strati viene calcolato implicitamente tramite le dimensioni del cell array W e delle singole matrici dei pesi.
+% 
 % Output:
 % - Y è l'insieme delle previsioni del modello sul minibatch. La riga j rappresenta la previsione sul campione j-esimo del minibatch
 % - a è il cell array delle uscite degli strati, utili per la backpropagation. Ogni cella contiene una matrice, dove la colonna j rappresenta l'uscita della rete neurale relativa al j-esimo campione

@@ -1,7 +1,10 @@
 function show_numerical_feature_graphs(features, feature_names)
-%Questa funzione mostra i grafici delle distribuzioni dei valori delle
-%features numeriche.
-
+% Questa funzione mostra i grafici delle distribuzioni dei valori delle
+% features numeriche.
+%
+% Input:
+% - features è la sottotabella le cui colonne rappresentano i valori delle features da mostrare nei grafici
+% - feature_names è l'insieme dei nomi delle features
 
 % Per ogni colonna, calcolo la distribuzione dei valori
 for feature = 1:length(feature_names)

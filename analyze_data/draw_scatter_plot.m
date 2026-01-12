@@ -1,5 +1,6 @@
 function draw_scatter_plot(feature, feature_name, label)
 % Quetsa funzione disegna lo scatter plot di una feature e della label.
+% 
 % Input:
 % - feature è la feature da mostrare
 % - feature_name è il nome della feature

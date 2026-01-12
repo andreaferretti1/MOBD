@@ -4,6 +4,7 @@ function [w_pos, w_neg] = weight_class(Y_training)
 %
 % Input:
 % - Y_training è il vettore delle labels dei campioni del training set
+% 
 % Output:
 % - w_pos è il peso da attribuire alla classe positiva
 % - w_neg è il peso da attribuire alla classe negativa

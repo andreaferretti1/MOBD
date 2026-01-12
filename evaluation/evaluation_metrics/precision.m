@@ -3,9 +3,11 @@ function [precision] = precision(TP, FP)
 % esprime il numero di campioni predetti come positivi dal modello, e che
 % lo sono effettivamente.
 % La formula utilizzata è Precision = true positives / (true positives + false positives)
+% 
 % Input:
 % - TP è il numero di true positives
 % - FP è il numero di false positives
+% 
 % Output:
 % - precision è il valore di precision del modello
 

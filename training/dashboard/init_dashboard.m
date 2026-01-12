@@ -7,6 +7,7 @@ function [h] = init_dashboard(is_validation, training_hyperparams, neural_networ
 % - is_validation indica se il training è effettuato nella fase di validazione
 % - training_hyperparams sono gli ieprparametri di addestramento da mostrare a schermo
 % - neural_network è il cell array contenente la struttura della rete neurale
+% 
 % Output:
 % - h è l'handle del grafico
 

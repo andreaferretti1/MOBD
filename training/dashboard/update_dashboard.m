@@ -1,4 +1,4 @@
-function update_dashboard(h, iter, epoch, max_epochs, train_loss, train_f2_score, eval_loss, eval_f2_score, eval_frequency, is_validation)
+function update_dashboard(h, iter, epoch, max_epochs, train_loss, train_f2_score, eval_loss, eval_f2_score, is_validation)
 % Questa funzione aggiorna i grafici e il conteggio epoche e iterazioni.
 %
 % Input:
@@ -10,43 +10,26 @@ function update_dashboard(h, iter, epoch, max_epochs, train_loss, train_f2_score
 % - train_f2_score è l'F2-score sul training set
 % - eval_loss è la loss media sul validation/test set
 % - eval_f2_score è l'F2-score sul validation/test set
-% - eval_frequency è la frequenza con cui si calcolano le metriche su validation/test set
 % - is_validation indica se sto effettuando tuning degli iperparametri
 
 
 
 % Aggiorno le metriche sul training set
-set(h.line_train_loss, 'XData', 1:iter, 'YData', train_loss(1:iter));
+set(h.line_train_loss, 'XData', 1:epoch, 'YData', train_loss(1:epoch));
 if ~is_validation
-    set(h.line_train_f2, 'XData', 1:iter, 'YData', train_f2_score(1:iter));
-    set(h.line_eval_f2,'XData', 1 : eval_frequency : iter, 'YData', eval_f2_score(1 : floor(iter / eval_frequency)));
+    set(h.line_train_f2, 'XData', 1:epoch, 'YData', train_f2_score(1:epoch));
 end
 
-% Aggiorno metriche sul validation/test set
-if(mod(iter, eval_frequency) == 0)
 
-    index = iter / eval_frequency;
 
-    set(h.line_eval_loss, 'XData', eval_frequency : eval_frequency : iter, 'YData', eval_loss(1 : index));
+set(h.line_eval_loss, 'XData', 1:epoch, 'YData', eval_loss(1 : epoch));
 
-    if ~is_validation
-        set(h.line_eval_f2,'XData', eval_frequency : eval_frequency : iter, 'YData', eval_f2_score(1 : index));
-    end
+if ~is_validation
+
+    set(h.line_eval_f2,'XData', 1:epoch, 'YData', eval_f2_score(1 : epoch));
 
 end
 
 
-% Aggiorno il testo
-progress_text = sprintf(['\n\\bfSTATO AVANZAMENTO:\\rm\n' ...
-    'Epoca:      %d / %d\n' ...
-    'Iterazione: %d'], ...
-    epoch, ...
-    max_epochs, ...
-    iter);
-
-new_string = [h.static_info_str, progress_text];
-
-set(h.text_handle, 'String', new_string);
-
-drawnow limitrate;
+update_status_text(h, epoch, max_epochs, iter)
 end

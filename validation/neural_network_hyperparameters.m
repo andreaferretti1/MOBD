@@ -1,6 +1,7 @@
 classdef neural_network_hyperparameters
     % Questa classe è una enumerazione degli iperparametri relativi alla
     % rete neurale
+    % 
     % Valori:
     % - NETWORK_CONFIGURATION indica la struct contenente il numero di neuroni e le funzioni di attivazione per ogni layer
     % - PARAM_INIT_METHOD è il metodo di inizializzazione dei parametri della rete

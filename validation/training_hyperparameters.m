@@ -1,6 +1,7 @@
 classdef training_hyperparameters
     % Questa classe è una enumerazione dell'insieme degli iperparametri
     % necessari per addestrare la rete
+    % 
     % Valori:
     % - ALPHA è il passo del SGD con momentum
     % - BETA è il coefficiente del momentum

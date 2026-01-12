@@ -3,6 +3,7 @@ function str = value_to_string(val)
 % 
 % Input:
 % - val è il valore da convertire in stringa
+% 
 % Output:
 % - str è la stringa
 

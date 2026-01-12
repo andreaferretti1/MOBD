@@ -42,6 +42,9 @@ rng(1);
 
 % ----Addestro il modello con la combinazione di iperparametri migliore----
 
+input_neurons = size(X_training, 2);
+output_neurons = 1;
+
 num_neurons_per_layer = [input_neurons, 128, 64, 32, 16, output_neurons];
 num_hidden_layers = numel(num_neurons_per_layer) - 2;
 activation_functions = ["relu", "relu", "relu", "relu", "sigmoid"];
@@ -69,14 +72,14 @@ X_test = table2array(X_test);
 [w_pos, w_neg] = weight_class(Y_training);
 
 % Addestro il modello
-neural_network_trained = train_model(X_training, Y_training, neural_network, training_params, is_validation, w_pos, w_neg);
+neural_network_trained = train_model(X_training, Y_training, X_test, Y_test, neural_network, training_params, is_validation, w_pos, w_neg);
 
 
 % ---Valuto le prestazioni del modello sul training set e sul data set---
-[~, Y_classified_test] = predict_and_classify(X_test, neural_network_trained);
+[~, Y_classified_test] = predict_and_classify(false, X_test, neural_network_trained);
 [F2_score_test, precision_test, recall_test] = evaluate_model(Y_classified_test, Y_test);
 
-[~, Y_classified_training] = predict_and_classify(X_training, neural_network_trained);
+[~, Y_classified_training] = predict_and_classify(false, X_training, neural_network_trained);
 [F2_score_training, precision_training, recall_training] = evaluate_model(Y_classified_training, Y_training);
 
 results_training = struct('f2', F2_score_training, 'precision', precision_training, 'recall', recall_training);

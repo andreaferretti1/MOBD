@@ -1,9 +1,11 @@
 function [TP, FP, TN, FN] = confusion_matrix(y_pred, y)
 % Questa funzione calcola la matrice di confusione sulle previsioni
 % effettuate.
+% 
 % Input:
 % - y_pred è il vettore degli output predetti dal modello
 % - y è il valore delle label dei campioni su cui il modello ha calcolato la previsione
+% 
 % Output:
 % - TP è il numero di true positives
 % - FP è il numero di false positives

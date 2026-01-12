@@ -1,8 +1,10 @@
 function [encoded_feature] = encode_categorical_features(categorical_feature)
 % Questa funzione codifica una feature categorica utilizzando la one hot
 % encoding. 
+% 
 % Input:
 % - categorical_feature è la feature da codificare
+% 
 % Output:
 % - encoded_feature è una table, dove ciascuna colonna è una categoria della feature
 
