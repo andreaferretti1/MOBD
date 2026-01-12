@@ -21,6 +21,7 @@ rng(1);
 % ----------------Effettuo il tuning degli iperparametri------------------
 
 % Definisco i possibili valori degli iperparametri
+
 % % alpha = [0.003, 0.002];
 % % beta = [0.95, 0.95];
 % % epochs = [70, 70];
